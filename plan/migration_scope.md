@@ -58,6 +58,15 @@ This document outlines the scope and key parameters for the migration from Apach
 - Production deployment patterns established
 - Documentation created for future flow development
 
+## Testing Strategy
+
+- Leverage existing Airflow tests to validate Prefect flow functionality
+- Create test patterns for the first few simple flows as conversion templates
+- Use pytest with `prefect_test_harness` as a session-scoped fixture for efficient testing
+- Test tasks individually using the `.fn()` method to access the original function
+- Use `disable_run_logger` when testing tasks that use logging
+- Tests will serve as a validation mechanism throughout the migration process
+
 ## Migration Goals
 
 - Enable data engineers to build workflows faster with a more pythonic framework
