@@ -10,6 +10,9 @@ Prefect can run any valid python function or method provided it has at least an 
 
 Prefect can also run flows locally. You can invoke flows to run locally just like you would invoke a python function. Just call the flow decoratored function and you'll get a local instance of a flow run.
 
+Prefect is fundamentally much more pythonic than airflow and much more minimally invasive. This should be leveraged to make the migration as simple as possible.
+
+Essentially think of transitioning from airflow to prefect as converting your airflow dags back into native python functions.
 
 ### 1. Audit & Prioritize 
 
