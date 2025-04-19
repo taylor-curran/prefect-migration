@@ -1,3 +1,14 @@
+## Important things to keep in mind:
+
+The main requirment for Prefect is the @flow decorator. Tasks (@task) is optional but recommended.
+
+The point being when converting a script to a prefect flow, you should start with the flow first, check that that works, then add in tasks where appropriate.
+
+This is a large paradigm shift from Airflow where you have a DAG object with tasks and all of that is required to even run.
+
+Prefect can run any valid python function or method provided it has at least an @flow decorator.
+
+Prefect can also run flows locally. You can invoke flows to run locally just like you would invoke a python function. Just call the flow decoratored function and you'll get a local instance of a flow run.
 
 
 ### 1. Audit & Prioritize 
