@@ -33,8 +33,8 @@ clean: stop
 	if [ -f airflow-worker.pid ]; then rm airflow-worker.pid; fi
 
 pip-install-local:
-	pip install -r requirements.txt -r requirements-dev.txt
-	pip install -r requirements-override.txt --upgrade
+	uv pip install -r requirements.txt -r requirements-dev.txt
+	uv pip install -r requirements-override.txt --upgrade
 
 stop:
 	docker-compose down
