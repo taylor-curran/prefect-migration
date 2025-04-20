@@ -11,6 +11,7 @@ This document outlines the scope and key parameters for the migration from Apach
 
 - No need to maintain both systems in parallel during migration
 - Convert Airflow DAGs back to native Python functions with `@flow` decorators
+- Many Airflow operators can be replaced with Prefect blocks, available through Prefect integration libraries
 - Focus on testing and validating each flow before moving to deployment configuration
 - Start with converting simple workflows before tackling complex orchestration
 
