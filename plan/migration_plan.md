@@ -5,35 +5,35 @@
 - **Current Setup**: Apache Airflow 2.10.5 with ~60 DAG files
 - **DAG Complexity**: Ranges from simple (hello_world.py) to complex (glam.py) with GCP integrations
 
-## 2. Environment Setup
-
-bash
-# Using existing venv or creating one if needed
-source .venv/bin/activate  # or your preferred venv location
-
-# Install Prefect 3
-pip install prefect>=3.0.0
-
-## 3. Migration Approach
+## 2. Migration Approach
 
 ### Phase 1: Basic Syntax Migration
 
 1. **Start with simple DAGs**
-   - hello_world.py
-   - extensions.py
-   - other simple DAGs with minimal operators
+   - hello_world.py 
+   - casa.py 
+   - Other simple DAGs with minimal operators
 
 2. **Core Conversion Patterns**:
 
    | Airflow Concept | Prefect Equivalent |
-   |----------------|--------------------|
+   |----------------|--------------------|  
    | DAG object + with DAG() | @flow-decorated function |
    | PythonOperator | @task-decorated function |
    | BashOperator | @task with subprocess or shell command utils |
+   | Custom operators | @task with appropriate implementation |
    | XCom push/pull | Direct function returns and parameters |
    | DAG dependencies (>>) | Function calls (result = task_a(); task_b(result)) |
+   | Variables & connections | Environment variables or Prefect blocks |
 
-3. **Example Conversion** (hello_world.py):
+3. **Learned Conversion Tips**:
+   - Keep each flow file standalone and runnable
+   - Use `log_prints=True` for simple debugging in the flow decorator
+   - Document the original DAG's purpose and ownership in the flow docstring
+   - Create placeholder implementations for external integrations
+   - Flows can be tested by simply calling them as Python functions
+
+4. **Example Conversion** (hello_world.py):
 
 python
 # Original Airflow DAG
@@ -83,31 +83,27 @@ def hello_world_flow():
 if __name__ == "__main__":
     hello_world_flow()
 
-### Phase 2: Medium Complexity DAGs
+## 3. Testing Strategy
 
-- Handle scheduling, retries, notifications, and other metadata
-- Focus on direct translation of business logic
-- Keep tasks in the same file as flows unless there's a clear need for reuse
+### Avoiding Airflow Testing Antipatterns
 
-### Phase 3: Complex DAGs
+- **Don't port over structural validation tests** - they're less relevant in Prefect
+- **Don't test that flows can be imported/parsed** - this is unnecessary in Prefect's model
+- **Don't focus on testing flow metadata** - focus on behavior instead
 
-- Break apart large DAGs if needed
-- Convert Airflow subDAGs to Prefect subflows
-- Handle GCP integrations
+### Prefect-Native Testing Approach
 
-## 4. Testing Strategy
+1. **Test actual flow execution and outputs**
+   - Test that flows complete successfully and return expected results
+   - Focus on business logic validation, not structure
 
-1. **Leverage Existing Tests**
-   - Convert existing Airflow tests in the `/tests` directory to work with Prefect flows
-   - Maintain test coverage for critical business logic
+2. **Test task functionality**
+   - Use `.fn()` method to access the original function
+   - Use `disable_run_logger` when testing tasks that use logging
 
-2. **Simple Test Approach**
-   - After converting the first 3 simple flows, create basic test patterns
-   - Use these test patterns as templates for validating other migrations
-
-3. **Test Framework**
-   - Use pytest (already in the repository) for testing Prefect flows
-   - Example test for hello_world flow:
+3. **Use `prefect_test_harness` efficiently**
+   - Set up as a session-scoped fixture rather than per-test
+   - Avoids overhead of creating new test database for each test
 
 python
 # tests/prefect_flows/test_hello_world.py
@@ -134,21 +130,31 @@ def test_hello_world_flow():
     result = hello_world_flow()
     assert result == "Hello from Prefect!"
 
-## 5. Directory Structure
+## 4. Complex DAG Migration
 
-Simple approach to start with:
+- Break apart large DAGs if needed
+- Convert Airflow subDAGs to Prefect subflows 
+- Consider organizing shared utilities to avoid duplication
+
+## 5. Deployment and Scheduling
+
+- Create YAML-based deployment configurations
+- Replace Airflow schedules with Prefect schedules in deployment configs
+- Replace Airflow sensors with Prefect Deployment triggers (via prefect.yaml)
+- Finalize directory structure based on deployment needs
 
 prefect-migration/
 ├── prefect_flows/            # Converted flows
 │   ├── __init__.py
 │   ├── hello_world.py        # Each file contains both flow and its tasks
-│   ├── extensions.py
+│   ├── casa.py
 │   └── ...
 ├── utils/                    # Keep existing utilities where possible
-└── deployment/               # For later YAML deployment configurations
+└── deployment/               # For YAML deployment configurations
+    ├── dev/
+    └── prod/
 
-## 6. Next Steps (Post-Syntax Migration)
+## 6. Infrastructure Integration
 
-- Create YAML-based deployment configurations
-- Set up GCP authentication blocks
 - Configure work pools for production deployment
+- Handle GCP integrations with appropriate Prefect patterns
