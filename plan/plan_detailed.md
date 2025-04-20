@@ -26,7 +26,7 @@ After completing these initial DAGs, we'll move on to these medium-complexity DA
 
 ## Testing Strategy & Implementation
 
-### Determine Appropriate Test Coverage
+### Determine Appropriate Test Coverage Plan
 
 **Objective**: Establish the right level of test coverage for non-trivial flows before scaling testing approach.
 
