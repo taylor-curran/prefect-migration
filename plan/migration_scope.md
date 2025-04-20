@@ -25,6 +25,22 @@ This document outlines the scope and key parameters for the migration from Apach
 - Complete re-architecture of workflows (focus on direct conversion while improving where possible)
 - Changes to underlying business logic or data processing
 
+## Success Criteria
+
+- All workflows successfully converted to Prefect flows
+- Local execution validated for all flows
+- Production deployment patterns established
+- Documentation created for future flow development
+
+## Testing Strategy
+
+- Leverage existing Airflow tests to validate Prefect flow functionality
+- Create test patterns for the first few simple flows as conversion templates
+- Use pytest with `prefect_test_harness` as a session-scoped fixture for efficient testing
+- Test tasks individually using the `.fn()` method to access the original function
+- Use `disable_run_logger` when testing tasks that use logging
+- Tests will serve as a validation mechanism throughout the migration process
+
 ## Infrastructure & Deployment
 
 - **Development Environment**: 
@@ -42,19 +58,5 @@ This document outlines the scope and key parameters for the migration from Apach
   - Using `prefect.yaml` files rather than `python.deploy()` syntax
   - Focus on successful local runs before configuring deployments
 
-## Success Criteria
 
-- All workflows successfully converted to Prefect flows
-- Local execution validated for all flows
-- Production deployment patterns established
-- Documentation created for future flow development
-
-## Testing Strategy
-
-- Leverage existing Airflow tests to validate Prefect flow functionality
-- Create test patterns for the first few simple flows as conversion templates
-- Use pytest with `prefect_test_harness` as a session-scoped fixture for efficient testing
-- Test tasks individually using the `.fn()` method to access the original function
-- Use `disable_run_logger` when testing tasks that use logging
-- Tests will serve as a validation mechanism throughout the migration process
 
