@@ -6,6 +6,8 @@ This document outlines the scope and key parameters for the migration from Apach
 
 - **Prefect 3.0** (latest version)
 - Will require researching up-to-date features and best practices for this version
+- Approximately 60+ DAG files to migrate
+- Migration Goal: Enable data engineers to build workflows faster with a more pythonic framework
 
 ## Migration Strategy Highlights
 
@@ -14,6 +16,8 @@ This document outlines the scope and key parameters for the migration from Apach
 - Many Airflow operators can be replaced with Prefect blocks, available through Prefect integration libraries
 - Focus on testing and validating each flow before moving to deployment configuration
 - Start with converting simple workflows before tackling complex orchestration
+- Airflow has a lot of anti-patterns that we can avoid in Prefect
+  - Don't fall in the trap of repeating them in the Prefect implementation just because they exist in Airflow
 
 ## Out of Scope
 
@@ -38,20 +42,6 @@ This document outlines the scope and key parameters for the migration from Apach
   - Using `prefect.yaml` files rather than `python.deploy()` syntax
   - Focus on successful local runs before configuring deployments
 
-## Existing Codebase Analysis
-
-- **DAG Complexity**: Mixed
-  - Simple DAGs (e.g., `hello_world.py`) with basic Python/Bash operations
-  - Complex DAGs (e.g., `glam.py`) with extensive dependencies, custom operators, and complex orchestration
-  - Approximately 60+ DAG files to migrate
-
-- **Technology Integrations**:
-  - GCP services integration
-  - Docker containers
-  - DataHub integration
-  - SQL execution
-  - Custom operators and utilities
-
 ## Success Criteria
 
 - All workflows successfully converted to Prefect flows
@@ -68,9 +58,3 @@ This document outlines the scope and key parameters for the migration from Apach
 - Use `disable_run_logger` when testing tasks that use logging
 - Tests will serve as a validation mechanism throughout the migration process
 
-## Migration Goals
-
-- Enable data engineers to build workflows faster with a more pythonic framework
-- Reduce complexity compared to Airflow's DAG-centric approach
-- Leverage Prefect's minimal invasiveness to Python code
-- Improve development velocity through simpler local testing
