@@ -26,7 +26,7 @@ After completing these initial DAGs, we'll move on to these medium-complexity DA
 
 ## Testing Strategy & Implementation
 
-### Task 2.1: Determine Appropriate Test Coverage
+### Determine Appropriate Test Coverage
 
 **Objective**: Establish the right level of test coverage for non-trivial flows before scaling testing approach.
 
@@ -41,7 +41,7 @@ After completing these initial DAGs, we'll move on to these medium-complexity DA
 - Test coverage document outlining what aspects of flows should be tested
 - Agreement on testing priorities based on business value
 
-### Task 2.2: Create Test Fixture Framework
+### Create Test Fixture Framework
 
 **Objective**: Build reusable testing infrastructure that follows Prefect best practices.
 
@@ -54,7 +54,7 @@ After completing these initial DAGs, we'll move on to these medium-complexity DA
 - Testing infrastructure that can be easily extended to all future flows
 - Clear pattern for mocking external dependencies
 
-### Task 2.3: Implement Tests for Core Flows
+### Implement Tests for Core Flows
 
 **Objective**: Create comprehensive test suites for the two selected flows.
 
