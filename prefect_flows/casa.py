@@ -1,6 +1,9 @@
 from datetime import datetime, timedelta
 from prefect import flow, task
 
+# TODO: add implementation of fivetran_sync and similar connectors to plan and detailed plan
+# We can use prefect blocks for this.
+
 # In a real implementation, we'd use a Prefect integration or create a custom task
 # for Fivetran. For now, we'll create a mock task as a placeholder.
 @task
