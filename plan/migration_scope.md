@@ -20,6 +20,9 @@ This document outlines the scope and key parameters for the migration from Apach
 
 - No need to maintain both systems in parallel during migration
 - Convert Airflow DAGs back to native Python functions with `@flow` decorators
+- @task decorators are optional in Prefect, you should start with the required top level @flow decorator.
+- Use @task decorators to functions that run inside the @flow only after the @flow decorator has been added and is working.
+- Not everything needs to be decorated, you can use plain functions and call them directly.
 - Many Airflow operators can be replaced with Prefect blocks, available through Prefect integration libraries
 - Focus on testing and validating each flow before moving to deployment configuration
 - Start with converting simple workflows before tackling complex orchestration
