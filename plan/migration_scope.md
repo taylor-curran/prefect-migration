@@ -9,12 +9,6 @@ This document outlines the scope and key parameters for the migration from Apach
 - Approximately 60+ DAG files to migrate
 - Migration Goal: Enable data engineers to build workflows faster with a more pythonic framework
 
-## Out of Scope
-
-- Maintenance of original Airflow DAGs after migration
-- Complete re-architecture of workflows (focus on direct conversion while improving where possible)
-- Changes to underlying business logic or data processing
-
 ## Success Criteria
 
 - All workflows successfully converted to Prefect flows
@@ -32,11 +26,9 @@ This document outlines the scope and key parameters for the migration from Apach
 - Airflow has a lot of anti-patterns that we can avoid in Prefect
   - Don't fall in the trap of repeating them in the Prefect implementation just because they exist in Airflow
 
+## Extra Scoping Considerations
 
-# Extra Scoping Considerations
-
-
-## Testing Strategy
+### Testing Strategy
 
 - Leverage existing Airflow tests to validate Prefect flow functionality
 - Create test patterns for the first few simple flows as conversion templates
@@ -45,7 +37,7 @@ This document outlines the scope and key parameters for the migration from Apach
 - Use `disable_run_logger` when testing tasks that use logging
 - Tests will serve as a validation mechanism throughout the migration process
 
-## Infrastructure & Deployment
+### Infrastructure & Deployment
 
 - **Development Environment**: 
   - Local execution with `pip install prefect`
@@ -62,5 +54,8 @@ This document outlines the scope and key parameters for the migration from Apach
   - Using `prefect.yaml` files rather than `python.deploy()` syntax
   - Focus on successful local runs before configuring deployments
 
+### Out of Scope
 
-
+- Maintenance of original Airflow DAGs after migration
+- Complete re-architecture of workflows (focus on direct conversion while improving where possible)
+- Changes to underlying business logic or data processing
