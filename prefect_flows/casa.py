@@ -27,6 +27,7 @@ def casa_flow():
     """
     # In a real implementation, we would get this from a configuration or secret
     connector_id = "CASA_CONNECTOR_ID"  # placeholder value
+    print(f"Using connector ID: {connector_id}")
     
     # Trigger the Fivetran sync
     result = fivetran_sync(connector_id=connector_id)

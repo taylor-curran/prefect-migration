@@ -11,6 +11,7 @@ def print_hello():
 
 @task
 def run_bash_command():
+    print("Running bash command")
     subprocess.run(["echo", "Hello from Bash!"], check=True)
 
 
